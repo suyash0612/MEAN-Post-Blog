@@ -1,0 +1,33 @@
+<mat-card>
+  <form (submit)="onAddPost(postFormRef)" #postFormRef="ngForm">
+    <mat-form-field>
+      <mat-label>Post Title</mat-label>
+      <input
+        type="text"
+        name="title"
+        placeholder="Enter Post Title"
+        matInput
+        minlength="3"
+        ngModel
+        #titlecheck="ngModel"
+        required
+      />
+      <mat-error *ngIf="titlecheck.invalid">Post title required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+    <mat-label>Post Content</mat-label>
+      <textarea
+        rows="4"
+        name="content"
+        placeholder="Enter Post Content"
+        matInput
+        ngModel
+        minlength="3"
+        required
+        #contentcheck="ngModel"
+      ></textarea>
+      <mat-error *ngIf="contentcheck.invalid">Post content required</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="warn" type="submit">Save</button>
+  </form>
+</mat-card>

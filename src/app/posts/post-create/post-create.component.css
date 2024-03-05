@@ -1,0 +1,25 @@
+mat-card , mat-form-field {
+    display: block;
+    width: 75%;
+    margin: auto;
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 4px rgba(254, 51, 0, 0.93);
+}
+
+form{
+    margin: auto;
+    padding: 1rem;
+
+}
+
+button{
+    display: block;
+    width: 20%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
