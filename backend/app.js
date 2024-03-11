@@ -1,7 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Post = require('./models/post')
+const mongoose = require('mongoose');
 
 const app = express();
+
+mongoose.connect("mongodb+srv://eyantra21:ES8NGvfasRu3myUy@cluster0.d5wlnr4.mongodb.net/node-angular?retryWrites=true&w=majority&appName=Cluster0")
+.then(()=>{
+    console.log('Connected to Database');
+})
+.catch(()=>{
+    console.log("Connection Failed");
+})
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -16,29 +26,40 @@ app.use((req , res , next)=>{
 });
 
 app.post("/api/posts",(req,res,next)=>{
-    const post = req.body; // added by body-parser
-    console.log(post);
+    // const post = req.body; // added by body-parser
+    const post = new Post({
+        title:req.body.title,
+        content:req.body.content
+    }); // added by body-parser
+    post.save();
+    console.log(post.id + post.title + post.content);
     res.status(201).json({
         message:'post added successfully'
     });
 });
 
-app.use('/api/posts',(request , response, next )=>{
-    const posts = [{
-        id:'34f32f',
-        title:'First server-side post',
-        content:'This is coming from server'
-    },
-    {
-        id:'fvbfdb8r',
-        title:'Second server-side post',
-        content:'This is coming from server!'
-    }
-    ];
-    return response.status(200).json({
-        message : 'Posts fetched successfully',
-        posts : posts
+app.get('/api/posts',(request , response, next )=>{
+    Post.find().then(documents => {
+        response.status(200).json({
+            message : 'Posts fetched successfully',
+            posts : documents
+        });
     });
+    // const posts = [{
+    //     id:'34f32f',
+    //     title:'First server-side post',
+    //     content:'This is coming from server'
+    // },
+    // {
+    //     id:'fvbfdb8r',
+    //     title:'Second server-side post',
+    //     content:'This is coming from server!'
+    // }
+    // ];
+    // return response.status(200).json({
+    //     message : 'Posts fetched successfully',
+    //     posts : posts
+    // });
 });
 
 module.exports = app;
